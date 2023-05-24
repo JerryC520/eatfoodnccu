@@ -41,8 +41,7 @@ def callback():
 def recommend_top_10_by_score(df, rankbase):
     # 根據綜合評分排序，取前十名
     top_10 = df.sort_values(by=rankbase, ascending=False).head(10)
-    response = "以下為您推薦的十大餐廳:\n" + "".join(top_10.apply(lambda row: f"{row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n", axis=1))
-
+    response = "以下為您推薦的十大餐廳:\n" + "".join(top_10.apply(lambda row: f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in top_10.iterrows()))
     return response
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -66,6 +65,35 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=reply_text))
         return    
+    if ("種類" in text) or ("類型" in text) or ("type" in text) or ("幾種" in text):
+        reply_text = """1. 中式料理
+                        2. 日式料理
+                        3. 火鍋
+                        4. 牛排
+                        5. 台灣小吃/台菜
+                        6. 印度料理
+                        7. 早午餐
+                        8. 早餐店
+                        9. 咖啡廳
+                        10. 法式料理
+                        11. 非洲料理
+                        12. 美式料理
+                        13. 英式料理
+                        14. 泰式料理
+                        15. 烤肉
+                        16. 酒吧
+                        17. 越式料理
+                        18. 義式料理
+                        19. 德國料理
+                        20. 墨西哥料理
+                        21. 燒烤
+                        22. 餐酒館
+                        23. 韓式料理
+                        24. 鐵板燒"""
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text))
+        return  
     types = df.copy()
     istyped = True
     if ("中式" in text) or ("中國" in text):
