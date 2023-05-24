@@ -13,12 +13,6 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-
-
-# 設定你的Channel Access Token和Channel Secret
-#line_bot_api = LineBotApi('M4OG1eV3C42zxSZOa2jX/IcDHVyF2neZ1BFWqjHU7kblxEIVAOcVyx3hxIRwen0wBL3sxpFgouCC1D5Kk3iStiMddLJCYCbzTWkhCWAmScs0NLeGMIaELYMw9cXCwRKC+VJaP8xWjfq3netQ5H+llwdB04t89/1O/w1cDnyilFU=')
-#handler = WebhookHandler('17104e2c81c14ccb9a7ba4c629fe0cd1')
-
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
@@ -41,8 +35,8 @@ def callback():
 def recommend_top_10_by_score(df, rankbase):
     # 根據綜合評分排序，取前十名
     top_10 = df.sort_values(by=rankbase, ascending=False).head(10)
-    #response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in top_10.iterrows()])
-    response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in enumerate(top_10.itertuples(), 1)])
+    top_10 = top_10.reset_index()
+    response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in top_10.iterrows()])
     return response
 
 @handler.add(MessageEvent, message=TextMessage)
