@@ -67,30 +67,7 @@ def handle_message(event):
         TextSendMessage(text=reply_text))
         return    
     if ("種類" in text) or ("類型" in text) or ("type" in text) or ("幾種" in text):
-        reply_text = "1. 中式料理 \n
-                        2. 日式料理 \n
-                        3. 火鍋 \n
-                        4. 牛排 \n
-                        5. 台灣小吃/台菜 \n
-                        6. 印度料理 \n
-                        7. 早午餐 \n
-                        8. 早餐店 \n
-                        9. 咖啡廳 \n
-                        10. 法式料理 \n
-                        11. 非洲料理 \n
-                        12. 美式料理 \n
-                        13. 英式料理 \n
-                        14. 泰式料理 \n
-                        15. 烤肉 \n
-                        16. 酒吧 \n
-                        17. 越式料理 \n
-                        18. 義式料理 \n
-                        19. 德國料理 \n
-                        20. 墨西哥料理 \n
-                        21. 燒烤 \n
-                        22. 餐酒館 \n
-                        23. 韓式料理 \n
-                        24. 鐵板燒\n"
+        reply_text =  "1. 中式料理\n2. 日式料理\n3. 火鍋\n4. 牛排\n5. 台灣小吃/台菜\n6. 印度料理\n7. 早午餐\n8. 早餐店\n9. 咖啡廳\n10. 法式料理\n11. 非洲料理\n12. 美式料理\n13. 英式料理\n14. 泰式料理\n15. 烤肉\n16. 酒吧\n17. 越式料理\n18. 義式料理\n19. 德國料理\n20. 墨西哥料理\n21. 燒烤\n22. 餐酒館\n23. 韓式料理\n24. 鐵板燒\n"
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply_text))
