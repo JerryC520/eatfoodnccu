@@ -41,7 +41,8 @@ def callback():
 def recommend_top_10_by_score(df, rankbase):
     # 根據綜合評分排序，取前十名
     top_10 = df.sort_values(by=rankbase, ascending=False).head(10)
-    response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in top_10.iterrows()])
+    #response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in top_10.iterrows()])
+    response = "以下為您推薦的十大餐廳:\n" + "".join([f"{i+1}. {row['Name']}(分數): {row[rankbase]}(種類):{row['type']}\n" for i, row in enumerate(top_10.itertuples(), 1)])
     return response
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -66,30 +67,30 @@ def handle_message(event):
         TextSendMessage(text=reply_text))
         return    
     if ("種類" in text) or ("類型" in text) or ("type" in text) or ("幾種" in text):
-        reply_text = """1. 中式料理
-                        2. 日式料理
-                        3. 火鍋
-                        4. 牛排
-                        5. 台灣小吃/台菜
-                        6. 印度料理
-                        7. 早午餐
-                        8. 早餐店
-                        9. 咖啡廳
-                        10. 法式料理
-                        11. 非洲料理
-                        12. 美式料理
-                        13. 英式料理
-                        14. 泰式料理
-                        15. 烤肉
-                        16. 酒吧
-                        17. 越式料理
-                        18. 義式料理
-                        19. 德國料理
-                        20. 墨西哥料理
-                        21. 燒烤
-                        22. 餐酒館
-                        23. 韓式料理
-                        24. 鐵板燒"""
+        reply_text = "1. 中式料理 \n
+                        2. 日式料理 \n
+                        3. 火鍋 \n
+                        4. 牛排 \n
+                        5. 台灣小吃/台菜 \n
+                        6. 印度料理 \n
+                        7. 早午餐 \n
+                        8. 早餐店 \n
+                        9. 咖啡廳 \n
+                        10. 法式料理 \n
+                        11. 非洲料理 \n
+                        12. 美式料理 \n
+                        13. 英式料理 \n
+                        14. 泰式料理 \n
+                        15. 烤肉 \n
+                        16. 酒吧 \n
+                        17. 越式料理 \n
+                        18. 義式料理 \n
+                        19. 德國料理 \n
+                        20. 墨西哥料理 \n
+                        21. 燒烤 \n
+                        22. 餐酒館 \n
+                        23. 韓式料理 \n
+                        24. 鐵板燒\n"
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply_text))
