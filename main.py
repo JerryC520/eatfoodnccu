@@ -41,8 +41,7 @@ def callback():
 def recommend_top_10_by_score(df, rankbase):
     # 根據綜合評分排序，取前十名
     top_10 = df.sort_values(by=rankbase, ascending=False).head(10)
-    #response = "\n".join([f"餐廳名稱: {rest['Name']}\n分數: {rest[rankbase]}\n種類:{rest['type']}\n" for rest in top_10])
-    response = "以下是為您推薦的餐廳:\n".join(top_10.apply(lambda row: f"餐廳名稱: {rest['Name']}\n分數: {rest[rankbase]}\n種類:{rest['type']}\n", axis=1))
+    response = "以下是為您推薦的餐廳:\n".join(top_10.apply(lambda row: f"餐廳名稱: {row['Name']}\n分數: {row[rankbase]}\n種類:{row['type']}\n", axis=1))
 
     return response
 
