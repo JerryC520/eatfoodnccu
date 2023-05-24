@@ -38,9 +38,33 @@ def callback():
         abort(400)
     return 'OK'
 
+def recommend_top_10_by_score(df, rankbase):
+    # 根據綜合評分排序，取前十名
+    top_10 = sorted(df, key=lambda x: x[rankbase], reverse=True)[:10]
+    response = "\n".join([f"餐廳名稱: {rest['Name']}\n分數: {rest[rankbase]}\n種類:{rest['type']}\n" for rest in top_10])
+    return response
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text
+    if text == "綜合排名十大高評價餐廳":
+        reply_text = recommend_top_10_by_score(df, 'rate_rank_score')
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text))
+        return
+    if text == "綜合排名十大鄰近餐廳":
+        reply_text = recommend_top_10_by_score(df, 'dist_rank_score')
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text))
+        return
+    if text == "綜合排名十大高人氣餐廳":
+        reply_text = recommend_top_10_by_score(df, 'pop_rank_score')
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_text))
+        return    
     types = df.copy()
     istyped = True
     if ("中式" in text) or ("中國" in text):
