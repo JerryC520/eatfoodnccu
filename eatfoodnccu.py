@@ -13,9 +13,14 @@ from linebot.models import (
 
 app = Flask(__name__)
 
+
+
 # 設定你的Channel Access Token和Channel Secret
-line_bot_api = LineBotApi('M4OG1eV3C42zxSZOa2jX/IcDHVyF2neZ1BFWqjHU7kblxEIVAOcVyx3hxIRwen0wBL3sxpFgouCC1D5Kk3iStiMddLJCYCbzTWkhCWAmScs0NLeGMIaELYMw9cXCwRKC+VJaP8xWjfq3netQ5H+llwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('17104e2c81c14ccb9a7ba4c629fe0cd1')
+#line_bot_api = LineBotApi('M4OG1eV3C42zxSZOa2jX/IcDHVyF2neZ1BFWqjHU7kblxEIVAOcVyx3hxIRwen0wBL3sxpFgouCC1D5Kk3iStiMddLJCYCbzTWkhCWAmScs0NLeGMIaELYMw9cXCwRKC+VJaP8xWjfq3netQ5H+llwdB04t89/1O/w1cDnyilFU=')
+#handler = WebhookHandler('17104e2c81c14ccb9a7ba4c629fe0cd1')
+
+line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
 # 讀取CSV檔案
 df = pd.read_csv('restaurant_data.csv')
@@ -60,5 +65,5 @@ def handle_message(event):
 
 # 打開request
 if __name__ == "__main__":
-    port = int(os.getenv('PORT', 8080))
-    app.run(host='127.0.0.1', port=port)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
